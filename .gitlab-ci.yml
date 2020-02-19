@@ -1,0 +1,51 @@
+image: gitlab.team.de:5005/gitlab/gitlab-runner-images/dvt-golang:latest-cgo
+
+variables:
+  # APP General
+  APP_NAME:
+  APP_REPO_NAME: business-snapshots
+  APP_TEST_DIR: tests
+
+  # Build
+  DOCKER_DRIVER:
+  CHART_MUSEUM:
+  CONTAINER_PORT: 8080
+
+  #kubectl context
+  CONTEXT_DEV:
+  CONTEXT_INT:
+  CONTEXT_INT1:
+  CONTEXT_PROD:
+
+  # GCP (DEV)
+  GCP_CI_USER:
+  GCP_REGISTRY:
+  GCP_PROJECT:
+  GCP_NAMESPACE:
+  GCP_INGRESS:
+  GCP_TILLER_NAMESPACE:
+
+
+  # DHC
+  DHC_REGISTRY:
+  DHC_NAMESPACE:
+  DHC_TILLER_NAMESPACE: default
+
+
+  # Appdynamics
+  APPDYNAMICS_TIER_NAME:
+  #APPDYNAMICS_NODE_NAME: $APP_NAME
+
+stages:
+  - build
+  - push:develop
+  - push:release
+  - deploy:gcp-develop
+  - deploy:gcp-release
+  - test
+  - push:dhc
+  - deploy:dhc-int
+  - deploy:dhc-int1
+  - deploy:dhc-prod
+
+# Templates
